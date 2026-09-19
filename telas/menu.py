@@ -1,15 +1,18 @@
 # menu.py
 
+# - importações
 import customtkinter as ctk
 from PIL import Image
 import os
 from util.cmds import carregar_imagem
 
+# - abrir menu principal
 def abrir_menu(janela):
     janela.title("Menu Principal | StockFlow")
     ctk.set_appearance_mode("light")
     janela.geometry("500x350")
 
+    # - frame principal
     frame = ctk.CTkScrollableFrame(
         janela,
         width=450,
@@ -19,7 +22,8 @@ def abrir_menu(janela):
     )
     frame._scrollbar.grid_remove()
 
-    caixa_image = carregar_imagem("caixa.png", (50, 50))
+    # - corpo do menu
+    caixa_image = carregar_imagem("caixa.png", (50, 50)) # - carregar imagem da caixa de produtos
     
     titulo = ctk.CTkLabel(
         frame,
@@ -50,6 +54,7 @@ def abrir_menu(janela):
         height=45
     )
 
+    # - funções dos botões
     def cadastro_item():
         from util.cmds import trocar_tela
         from telas.cad_prod import abrir_produto
@@ -58,6 +63,7 @@ def abrir_menu(janela):
 
     button_cadastro_produto.configure(command=cadastro_item)
 
+    # - função para abrir a tela de listagem de produtos
     def ver_items():
         from util.cmds import trocar_tela
         from telas.listar_prod import abrir_listar

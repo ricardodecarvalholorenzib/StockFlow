@@ -1,5 +1,6 @@
 # login.py
 
+# - importações
 import customtkinter as ctk
 from telas.menu import abrir_menu
 from PIL import Image
@@ -11,7 +12,7 @@ from util.sessao import iniciar_sessao
 def abrir_login(janela):
     janela.title("Entrar em uma Conta | StockFlow")
 
-
+    # - frame
     frame = ctk.CTkFrame(
         janela,
         width=600,
@@ -21,6 +22,7 @@ def abrir_login(janela):
     )
     frame.pack(expand=True)
 
+    # - corpo do login
     titulo = ctk.CTkLabel(
         frame,
         text="🔑 Entrar no StockFlow",
@@ -117,21 +119,23 @@ def abrir_login(janela):
     command=criar_conta
     )
     botao_criar_conta.pack(pady=20)
+    # - fim do corpo do login
 
+    # - função de cadastro
     def cadastro():
 
         usuario = nome_login.get().strip()
         senha = senha_login.get()
 
         if not usuario:
-            erro_label.configure(text="Digite seu usuário.")
+            erro_label.configure(text="Digite seu usuário.") # - se o campo de usuário estiver vazio, exibe uma mensagem de erro
             return
 
         if not senha:
-            erro_label.configure(text="Digite sua senha.")
+            erro_label.configure(text="Digite sua senha.") # - se o campo de senha estiver vazio, exibe uma mensagem de erro
             return
         
-        if autenticar_usuario(usuario, senha):
+        if autenticar_usuario(usuario, senha): # - se o usuário e senha estiverem corretos, inicia a sessão e abre o menu
             
             iniciar_sessao(usuario)
 
@@ -139,6 +143,6 @@ def abrir_login(janela):
 
             trocar_tela(janela, abrir_menu)
         else:
-            erro_label.configure(text="Usuário ou senha incorretos.")
+            erro_label.configure(text="Usuário ou senha incorretos.") # - se o usuário ou senha estiverem incorretos, exibe uma mensagem de erro
 
     botao_login.configure(command=cadastro)

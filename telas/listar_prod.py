@@ -1,5 +1,6 @@
 # listar_prod.py
 
+# - importações
 import customtkinter as ctk
 from PIL import Image
 from util.prod_save import carregar_meus_produtos, salvar_produtos
@@ -8,9 +9,11 @@ from telas.menu import abrir_menu
 import os
 from util.cmds import carregar_imagem
 
+# - abrir tela de listagem de produtos
 def abrir_listar(janela):
     janela.title("Listar Produtos")
-    
+
+    # - frame principal
     frame = ctk.CTkScrollableFrame(
     janela,
     width=450,
@@ -34,13 +37,13 @@ def abrir_listar(janela):
         text_color="red"
     )
 
-    produtos = carregar_meus_produtos()
+    produtos = carregar_meus_produtos() # - carregar produtos salvos
 
-    if produtos:
+    if produtos: # - se houver produtos, criar cards para cada produto
         for produto in produtos:
             caixa_image = carregar_imagem("caixa.png", (50, 50))
 
-            def editar_produto(p, j):
+            def editar_produto(p, j): # - função para editar produto
                 from util.cmds import trocar_tela
                 from telas.editar import abrir_editar_produto
 
@@ -51,12 +54,12 @@ def abrir_listar(janela):
                 salvar_produtos(produtos),
                 f.destroy(),
                 abrir_listar(j)
-            )
+            ) # - excluir produto
 
             card = ctk.CTkFrame(
                 frame,
                 corner_radius=10
-            )
+            ) # - card para cada produto
 
             editar_produto_button = ctk.CTkButton(
                 frame,
@@ -109,7 +112,7 @@ def abrir_listar(janela):
 
             card.pack(fill="x", padx=10, pady=8)
     
-    if not produtos:
+    if not produtos: # - se não existir produtos, mostrar mensagem 'você não tem produtos registrados'
         erro_label.configure(text="Você não tem produtos registrados!")
 
 

@@ -1,12 +1,15 @@
-import customtkinter as ctk
+# editar.py
 
+# - importações
+import customtkinter as ctk
 from util.prod_save import carregar_produtos, salvar_produtos
 
-
+# - abrir janela de editar produtos
 def abrir_editar_produto(janela, produto):
 
     janela.title("Editar Produto")
 
+    # - frame principal
     frame = ctk.CTkScrollableFrame(
         janela,
         width=450,
@@ -55,18 +58,16 @@ def abrir_editar_produto(janela, produto):
     preco_produto.insert(0, str(produto["preco"]))
     quantidade_produto.insert(0, str(produto["quantidade"]))
 
-    def salvar_edicao():
-
+    def salvar_edicao(): # - função de salvar edição do produto
         try:
             preco = float(
                 preco_produto.get().replace(",", ".")
             )
-
             quantidade = int(
                 quantidade_produto.get()
             )
 
-        except ValueError:
+        except ValueError: # - se os valores digitados não forem compátiveis, retorna erro
             error_label.configure(
                 text="Digite valores válidos para preço e quantidade."
             )
@@ -74,13 +75,13 @@ def abrir_editar_produto(janela, produto):
 
         novo_nome = nome_produto.get().strip()
 
-        if not novo_nome:
+        if not novo_nome: # - se o nome não for inserido, retorna erro
             error_label.configure(
                 text="Digite o nome do produto."
             )
             return
 
-        produtos = carregar_produtos()
+        produtos = carregar_produtos() # - carrega os produtos
 
         for p in produtos:
             if (
@@ -92,7 +93,7 @@ def abrir_editar_produto(janela, produto):
                 p["quantidade"] = quantidade
                 break
 
-        salvar_produtos(produtos)
+        salvar_produtos(produtos) # - salva os produtos
 
         from telas.menu import abrir_menu
         from util.cmds import trocar_tela
